@@ -25,6 +25,8 @@ public class Eks5flatmap {
         
         System.out.println("\nlisteAvLister etter 'flattening' (og sortering) : ");
         System.out.println(flatetListe);
+        
+       
 	}
 }
 

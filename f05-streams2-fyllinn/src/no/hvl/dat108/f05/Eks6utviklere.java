@@ -2,15 +2,14 @@ package no.hvl.dat108.f05;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 public class Eks6utviklere {
 	
 	public static void main(String[] args) throws Exception {
 		
+		//record Utvikler(String navn, Set
 		List<Utvikler> utviklere = Arrays.asList(
 				new Utvikler("Arne", Set.of("Java", "C")),
 				new Utvikler("Pere", Set.of("Javascript", "C++")),
@@ -21,12 +20,29 @@ public class Eks6utviklere {
 
 		System.out.println(
 				"\nEn oversikt over hvilke utviklere som kan Java:");
+		utviklere.stream()
+				.filter(u -> u.spraak().contains("Java"))
+				.forEach(System.out::println);
+		
 		
 		System.out.println(
 				"\nNavnet på en utvikler som kan C#, eller \"INGEN\" om ingen kan C#:");
+		String navn = utviklere.stream()
+				.filter(u -> u.spraak().contains("C#"))
+				.map(Utvikler::navn)
+				.findAny().orElse("INGEN");
+	
 
 		System.out.println(
 				"\nEn sortert liste over alle programmeringsspråkene utviklerne kan:");
+		List<String> språk = utviklere.stream()
+				//.map(Utvikler::spraak)
+				.flatMap(utvikler -> utvikler.spraak().stream())
+				.distinct()
+				.sorted()
+				.toList();
+		System.out.println("Språk utviklerene kan:" + språk);
+		
 		
 		System.out.println(
 				"\nHvilket språk flest utviklere kan (finner ett av dem):");
